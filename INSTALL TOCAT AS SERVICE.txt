@@ -1,0 +1,75 @@
+-- INSTALL TOCAT AS SERVICE 
+
+ id -u tomcat
+ usermod -d /opt/tomcat tomcat -m
+ 
+sudo groupadd tomcat
+-- PARA ELCASO QUE NO LO TENGA DESCARGADO EL TOMCAT
+sudo mkdir /opt/tomcat
+sudo useradd -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
+
+cd /opt/apache-tomcat-8.0.53
+sudo chgrp -R tomcat conf
+sudo chmod g+rwx conf
+sudo chmod g+r conf/*
+sudo chmod g+r bin/*
+sudo chown -R tomcat logs/ temp/ webapps/ work/ bin/
+
+sudo chgrp -R tomcat bin
+sudo chgrp -R tomcat lib
+sudo chmod g+rwx bin
+sudo chmod g+r bin/*
+sudo chmod 777 bin/*
+
+
+sudo nano /etc/systemd/system/geoserver.service
+
+-- pegar en el archivo
+
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+Environment=JAVA_HOME=/usr/lib/jvm/jre
+Environment=CATALINA_PID=/opt/tomcat/temp/tomcat.pid
+Environment=CATALINA_HOME=/opt/tomcat
+Environment=CATALINA_BASE=/opt/tomcat
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/bin/kill -15 $MAINPID
+
+User=tomcat
+Group=tomcat
+
+[Install]
+WantedBy=multi-user.target
+
+
+-- despues intalamos por motivos de seguridad
+
+sudo yum install -y haveged
+sudo systemctl start haveged.service
+sudo systemctl enable haveged.service
+
+
+
+
+-- SERVICION APLICACION SGM Y GEOSEERVER
+sudo systemctl start sgm.service
+sudo systemctl enable sgm.service
+sudo systemctl stop sgm.service
+
+sudo systemctl start sgm.service
+sudo systemctl stop sgm.service
+sudo systemctl enable sgm.service
+
+sudo nano /etc/systemd/system/sgm.service
+sudo nano /etc/systemd/system/geoserver.service
+
+
+ mkdir /servers_files/sgm/ -p
