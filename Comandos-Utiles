@@ -1,0 +1,703 @@
+Redimensionar volumnes logiscos del disco en centos 7
+http://intrusos.info/doku.php/linux:centos:ampliar_disco
+
+
+test dns 
+http://openresolver.com/?ip=186.47.44.172
+
+## DOCUMENTACIONPLUGINGS QGIS
+https://docs.qgis.org/2.14/es/docs/pyqgis_developer_cookbook/vector.html#adding-and-removing-fields
+
+# PAGINA REGISTRO CIVIL
+https://servicios.registrocivil.gob.ec/cdd/
+
+systemctl status seafile
+systemctl status seahub
+
+systemctl start seafile
+systemctl start seahub
+
+g49a7h
+#################################################################################################################
+#################################################################################################################
+## BACKUP INCREMENTALES
+	https://blog.dbi-services.com/backup-and-restore-postgresql-with-pgbackrest-i/
+#################################################################################################################
+#################################################  IMAGEN  ######################################################
+limpiar imagen 
+https://stackoverflow.com/questions/33881175/remove-background-noise-from-image-to-make-text-more-clear-for-ocr
+https://www.codeproject.com/Articles/196168/Contour-Analysis-for-Image-Recognition-in-C
+http://cimss.ssec.wisc.edu/wxwise/contour/contour1.html
+http://boofcv.org/index.php?title=Example_Detect_Calibration_Target
+http://boofcv.org/index.php?title=Example_Color_Space
+
+
+yum install epel-release -y 
+yum install tesseract-devel leptonica-devel -y
+
+export TESSDATA_PREFIX="/usr/share/tesseract-ocr/4.00/tessdata"
+export TESSDATA_PREFIX="/usr/share/tesseract/4/tessdata/"
+
+#################################################################################################################
+################################################  JAVASCRIPT  ###################################################
+https://enlight.nyc/projects/hex-color-generator/
+
+# COPY 
+function copyText(e) {
+	$(e.target).select();
+	document.execCommand('copy');
+	copiedText.fadeIn('slow');
+	copiedText.fadeOut(2000);
+}
+function getColor() {
+  return "#" + Math.random().toString(16);
+}
+function getColor() {
+  return "#" + Math.random();
+}
+#####################################################################################
+#####################################################################################
+	# COPIAR ARCHIVOS REMOTOS 
+scp sanmiguel_170307.backup root@181.196.107.2:/home
+## COPIAR ARCHIVOS LOCAL A REMOTOS USANDO PUERTO
+scp -P 2226 /home/backups/sanmiguel_170307.backup root@181.196.107.2:/home
+## remoto a local
+scp usuario@ordenador:/ruta/al/archivo-origen /ruta/al/directorio-destino
+## entre servidores 
+scp user1@server1:/path/to/file user2@server2:/path/to/folder/
+
+## COPIAR ARCHIVO ENTRE W Y LINUX
+pscp user@remote-server:/path/to/remote-file c:\path\to\local-folder\
+scp -i E:/Descargas/FIREFOX/origamiTalento3.pem catastro.jar centos@54.175.113.80:/home/centos
+
+# MATAR PROCESO
+kill -9 22927
+# VER PROCESOS ACTIVOS
+ps aux | grep java
+
+# CREAR DIRECTORIO
+	mkdir servers_files
+# CONEXCIONES ESTABLECIDAS
+ netstat -putona
+ 
+ # CAMBIAR LA FECHA EN CENTOS
+ date --set "2017-03-16 10:34"
+	
+############################################################################################################
+###########################################  FIREWALL  #####################################################
+sudo firewall-cmd --zone=public --remove-port=5432/tcp --permanent
+sudo firewall-cmd --zone=public --add-port=5432/tcp --permanent
+firewall-cmd --state
+##  view status of firewalld service (systemctl status firewalld)
+firewall-cmd --zone=public --list-all
+##  gets all info for the “public” zone
+firewall-cmd --list-all-zones
+##  shows all info for all zones
+firewall-cmd --zone=public --add-port=22/tcp --permanent
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+firewall-cmd --zone=public --add-port=5432/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --zone=public --remove-port=5903/tcp --permanent
+##  adds port 80 to public zone
+firewall-cmd --zone=public --add-service=http --permanent
+##  adds service http to public zone
+firewall-cmd --reload
+##  to remove port 80 from public zone
+firewall-cmd --get-default-zone
+##  shows default zone for firewall
+firewall-cmd --get-active-zones
+##  zones where network interfaces or sources are assigned
+## PORT-FORWARDING
+firewall-cmd --zone=public --add-masquerade --permanent
+firewall-cmd --zone=public --add-forward-port=port=80:proto=tcp:toport=8082 --permanent
+firewall-cmd --zone=public --remove-forward-port=port=80:proto=tcp:toport=8079 --permanent
+firewall-cmd --zone=public --remove-forward-port=port=80:proto=tcp:toport=8080 --permanent
+firewall-cmd --zone=public --add-forward-port=port=8110:proto=tcp:toaddr=192.168.100.210
+firewall-cmd --zone=public --remove-forward-port=port=80:proto=tcp:toport=8080 --permanent
+
+firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" destination address="192.168.100.210" forward-port port="8080" protocol="tcp" to-port="8181"'
+firewall-cmd --zone=public --remove-rich-rule='rule family="ipv4" destination address="192.168.100.210" forward-port port="8181" protocol="tcp" to-port="8080"'
+firewall-cmd --runtime-to-permanent
+
+## forward para la ip 192.168.100.210 del puerto 8080 envialo por la publica al puerto 8182
+firewall-cmd --permanent --zone=public --add-forward-port=port=8182:proto=tcp:toport=8080:toaddr=192.168.100.210
+firewall-cmd --permanent --zone=public --query-forward-port=port=8080:proto=tcp:toport=8182:toaddr=192.168.100.210
+firewall-cmd --permanent --list-all --zone=public
+
+	## FIREWALL centos 6
+iptables -I INPUT -p tcp -m tcp --dport 8088 -j ACCEPT
+iptables -I INPUT -p tcp -m tcp --dport 3306 -j ACCEPT
+iptables -I INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -I INPUT -p tcp -m tcp -i eth0 --dport 22 -j ACCEPT
+iptables -A INPUT -j ACCEPT -p tcp --dport 22
+
+-- DARLE PERMISO A UN PUERTO POR UNA INTERFAZ DE RED
+iptables -I INPUT -p ftp -m ftp -i eth0 --dport 22 -j ACCEPT
+iptables -A INPUT  -p tcp -m tcp -i eth0 --dport 21 -m conntrack --ctstate ESTABLISHED,NEW -j ACCEPT -m comment --comment "Allow ftp connections on port 21"
+iptables -A OUTPUT -p tcp -m tcp -i eth0 --dport 21 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT -m comment --comment "Allow ftp connections on port 21"
+iptables -A INPUT  -p tcp -m tcp --dport 3306 -m conntrack --ctstate ESTABLISHED,NEW -j ACCEPT -m comment --comment ""
+iptables -A OUTPUT -p tcp -m tcp --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT -m comment --comment ""
+
+iptables -L -n
+iptables -L -n -v
+
+#################################################################################################################################
+############################################## CONFIGURACION DE IP STATICA  #####################################################
+# CONFIGURACION DE IP STATICA Esto es una configuración con una IP estática:
+DEVICE=eth0
+BOOTPROTO=static
+HWADDR=00:0C:29:97:XX:XX
+IPADDR=192.168.0.156
+NETMASK=255.255.255.0
+NETWORK=192.168.0.0
+GATEWAY=192.168.0.1
+ONBOOT=yes
+TYPE=Ethernet
+
+# GUARDAMOS Y REINICIAMOS EL SERVICO DE RED
+systemctl restart network
+
+################################################################################################################################
+# COPIAR ARCHIVOS MEDIANTE TUNEL SSH
+# First, open the tunnel
+ssh -L 1234:remote2:22 -p 45678 user1@remote1
+ssh -L 1234:192.168.1.93:22 -p 45678 root@190.57.138.220
+ssh -L 3306:192.168.200.14:3306 -p 3306 root@170.47.44.36
+# Then, use the tunnel to copy the file directly from remote2
+scp -P 1234 user2@localhost:file .
+
+###############################################################################################################################
+## FONT INSTALL 1
+wget http://corefonts.sourceforge.net/msttcorefonts-2.5-1.spec
+
+sudo su
+yum install -y rpm-build cabextract ttmkfdir
+rpmbuild -bb msttcorefonts-2.5-1.spec
+rpm -ivh /root/rpmbuild/RPMS/noarch/msttcorefonts-2.5-1.noarch.rpm 
+
+## FONT INSTALL 2 fuentes time new roman
+yum install curl cabextract xorg-x11-font-utils fontconfig
+yum install https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+
+crtl + shitf + t
+18412 
+------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------
+`date +%H:%M:%S`
+java -jar dist/migrarProps.jar
+0989715618
+
+## ACTUALIZAR SECUENCIA
+SELECT setval('sgm_app.app_uni_seq', 784698, true);
+##CAMBIAR LOS ID REPETIDOS POR LA SECUENCIA DE LA TABLA
+UPDATE sgm_app.cat_predio_edificacion_prop SET id = nextval('sgm_app.app_uni_seq');
+ 
+-- ver lo como se va ejecutar nuestro metodo en la JVM
+javap -v -p -s -sysinfo -constants generarDiccionarioDatos/build/classes/migrarprops/MigrarProps.class
+
+chrome.exe --kiosk --kiosk-printing
+
+## IBARRA
+186.3.94.153
+root
+sis98
+av@luos -- Agad*17imavc
+-- DEVELOPER 
+root arteaga
+adminitrador sis98
+
+/usr/bin/pg_dump --host localhost --port 5432 --username sisapp --format custom --blobs --verbose --file bddimi_dev_2017_$(date +%Y-%m-%d.%H-%M-%S).backup bddimi_dev_2017blobs --verbose --file bddimi_dev_2017_$(date +%Y-%m-%d.%H-%M-  
+-------------------
+pg_dump -h 127.0.0.1 -p 5432 -U sisapp -F c -b -v sgm | ssh root@172.16.8.109 "psql sgm05"
+
+----
+ionic cordova platform add android
+ionic cordova platform rm android
+---- start app
+ionic serve
+---- bouilb apk
+ionic cordova build android
+
+-------------- opcionales en caso de error
+cordova platform rm android
+cordova platform add https://github.com/apache/cordova-android
+cordova platform update android
+
+npm uninstall -g angular-cli
+npm install -g angular-cli
+
+
+-----------------------------
+npm install -g gradle
+ionic platform rm android
+ionic platform add android
+-- GENERAR LA APK
+ionic build android
+-- GENERAR NUEVAMENTE LOS RESOURCES
+ionic cordova resources
+cordova plugin add cordova-plugin-admobpro-firebase
+
+-- desahabilitar pedido de credenciales en ionic
+git config --global http.sslVerify false
+
+cordova clean
+
+cordova platform add android@6.1.2
+Also found the following as an temporary workaround
+
+cordova platform add android --nofetch
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+186.3.94.153:8144/sgmEE
+IB_SRV = sis98
+IB_DB = 2clIeo4M
+--DES 
+172.16.8.109
+root --- sisapp2017
+admin --- GADibarra2017
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+SV = 186.42.225.198
+sisapp
+sis98
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+
+ps -ylC apache2 --sort:rss | awk '{SUM += $8; I += 1} END {print SUM/I/1024}'
+
+ps -N -ylC apache2 --sort:rss | awk '{SUM += $8} END {print SUM/1024}'
+
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+URL: http://localhost:8098/geoserver
+
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+------- ORDENAR NO_BLOQUE REPETIDOS
+WITH Q AS (
+  WITH X AS (
+    SELECT ed.predio, COUNT(ed.no_edificacion), ed.no_edificacion, 
+    ed.estado
+    FROM sgm_app.cat_predio_edificacion ed GROUP BY 1, 3, 4
+    HAVING COUNT(ed.no_edificacion) > 1 AND ed.estado = 'A' 
+  ) SELECT W.predio, MAX(W.id) AS id, MAX(W.no_edificacion)+1 AS no_edificacion 
+  FROM sgm_app.cat_predio_edificacion W, X AS D
+  WHERE W.predio= D.predio AND W.estado='A' AND W.no_edificacion = D.no_edificacion
+  GROUP BY 1 ORDER BY 1
+) UPDATE sgm_app.cat_predio_edificacion ed SET no_edificacion=F.no_edificacion
+FROM Q AS F WHERE F.id = ed.id 
+
+context.addMessage(clientId, message);
+externalContext.getFlash().setKeepMessages(true);
+return "users.xhtml?faces-redirect=true";
+
+-- COORDENADAS AZIMUT
+degrees(ST_Azimuth(ST_Centroid(c.geom), ST_Centroid(c1.geom)))
+
+
+INICIAR PostgreSQL DESDE CONSOLA
+net start PostgreSQL-9.6
+
+INGRESAR A: cd "C:\Program Files\PostgreSQL\9.6\bin" Y EJECUTAR >> 
+pg_ctl -D "../data" start
+
+"C:\Program Files\PostgreSQL\9.6\bin\pg_ctl.exe" runservice -N "PostgreSQL" -D "C:\Program Files\PostgreSQL\9.6\data" -w 
+
+-- IBARRA
+
+pg_restore -h 127.0.0.1 -U sisapp -d montecristi_desarrollo /home/montecristi_sgm_01092018.backup 
+
+172.16.8.139   Ir6Q1VoYmb
+172.16.8.138   Ir6Q1VoYmb
+
+xV3104,xv
+Fg22clIeo4M
+
+geo_admin >> Fg22clIeo4MCp
+
+-- git 
+navarroangelr
+Angel130Arteaga
+
+-- mover postgis a otro schema
+UPDATE pg_extension 
+  SET extrelocatable = TRUE 
+    WHERE extname = 'postgis';
+ 
+ALTER EXTENSION postgis 
+  SET SCHEMA public;
+-- AGUJEROS EN LOS POLIGONOS
+
+SELECT mzn_cod, ST_NRings(geom) FROM geodata.ct_manzanas_solares 
+WHERE ST_NRings(geom) > 1; -- ver agujeros en las manzanas
+
+-- remover point en poligonos
+UPDATE sometable
+SET the_geom = ST_RemovePoint(the_geom, ST_NPoints(the_geom) - 1)
+FROM sometable
+WHERE ST_IsClosed(the_geom) = true;
+
+-- memorya postgres para consultas
+ALTER SYSTEM SET work_mem = '128MB';
+-- this will force, non-startup configs to take effect for new connections
+SELECT pg_reload_conf();
+-- show current setting value
+-- use SHOW ALL to see all settings
+SHOW work_mem;
+  
+  
+  -- COMIT FORCE 
+  git push origin master --force
+
+  
+  
+-- UPDATE FUNCIONES GEOM
+
+UPDATE pg_catalog.pg_proc p SET prosrc = REPLACE(prosrc, 'bddimi.', '')
+
+
+120.40.69.242:1521:PRD 
+
+
+SELECT proname, p.*
+FROM pg_catalog.pg_namespace n
+JOIN pg_catalog.pg_proc p
+ON pronamespace = n.oid
+WHERE nspname = 'public' 
+
+UPDATE pg_catalog.pg_proc p
+SET prosrc = REPLACE (prosrc, 'bddimi.', '')
+
+---------------------------------------------
+---------------------------------------------
+ CREATE TABLE merged AS
+ SELECT ST_Union(ST_SnapToGrid(the_geom,0.0001)) 
+ FROM parishes
+ GROUP BY county_name;
+
+ 
+origamiprueba1@gmail.com
+origami1prueba
+
+Gta1294@2018
+
+
+----
+NAPAFEN >> PARA RECIEN NACIDO 
+
+-- ERROR EN CENTOS 7
+Could not resolve host: mirrorlist.centos.org; Unknown error
+
+vi /etc/resolv.conf
+-- insert
+nameserver 9.9.9.9
+
+
+SELECT lo_export(archivos.doc_file.archivo_oid, 'C:\Users\SUPERGOLD\Documents\NetBeansProjects') 
+FROM archivos.doc_file WHERE nombre_archivo = '20298_1.jpg';
+
+
+"C:\Program Files\PostgreSQL\9.4\bin\psql.exe" -h 127.0.0.1 -p 5432 -d sgmsanmiguel -U sisapp -c "\lo_export 32922 'C://leeImage.jpeg'"
+"C:\Program Files\PostgreSQL\10\bin\psql.exe" -h 172.16.8.138 -p 5432 -d fotos -U sisapp -c "\lo_export 2017456 'D://test.docx'"
+"C:\Program Files\PostgreSQL\10\bin\psql.exe" -h 192.168.52.121 -p 5432 -d bddimi -U sisapp -c "\lo_export 2017456 'D://test.docx'"
+
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+-------------------------------------------------------------
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+npm install -g npm-windows-upgrade
+npm-windows-upgrade
+
+npm-windows-upgrade -p -v latest
+
+-----------------------------------
+rm -rf node_modules
+rm package-lock.json yarn.lock
+npm cache clear --force
+npm install
+
+ npm install --save ionic-angular
+ npm install -g yarn
+
+###################################################################################################################
+########################################## INSTALL GUST ADDITIONS #################################################
+yum update
+yum install dkms gcc make kernel-devel bzip2 binutils patch libgomp glibc-headers glibc-devel kernel-headers
+mkdir -p /media/cdrom
+mount /dev/scd0 /media/cdrom
+sh /media/cdrom/VBoxLinuxAdditions.run
+
+####################################################################################################################
+####################################################################################################################
+
+/etc/init.d/network restart
+
+####################################################################################################################
+####################################################################################################################
+
+##################################################################################################################
+##################################################################################################################
+semanage port -a -t http_port_t -p tcp 8079
+
+CREATE USER sisapp WITH LOGIN SUPERUSER PASSWORD 'sisapp98' CREATEDB CREATEROLE;
+---To stop and disable it:
+
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+sudo systemctl restart firewalld
+
+  nano /var/lib/pgsql/10/data/postgresql.conf
+  listen_addresses = '*'
+  nano /var/lib/pgsql/10/data/pg_hba.conf
+  host    all             all             127.0.0.1/31            trust
+  host    all             all             0.0.0.0/0               trust
+  
+systemctl restart postgresql-10
+
+yum install -y postgis2_10 postgis2_10-client postgis2_10-utils
+-- POSTGRES 9.4
+yum install -y gdal-bin postgis2_94 postgis2_94-client postgis2_94-utils
+yum install -y gdal-bin postgresql-9.4-postgis-24 postgis24_94 postgis24_94-client postgis24_94-utils
+
+-- https://fmdojo.wordpress.com/2017/03/10/install-postgresql-9-6-on-centos-7/
+ -------------------------------------------------------------------------------------------------
+ -------------------------------------------------------------------------------------------------
+ -------------------------------------------------------------------------------------------------
+
+172.16.8.91 >> Di6epai3
+172.16.8.138 >> Ir6Q1VoYmb
+172.16.8.139 >> Ir6Q1VoYmb
+172.16.8.127 >> Fg22clIeo4M
+186.3.94.153 >> xV3104,xv
+
+-- PARA TENER DOS VERSIONES DE POSTGRES EN EL MISMO SERVIDOR SE CONFIGURA 
+
+nano /var/lib/pgsql/9.4/data/postgresql.conf
+
+port = 5433
+
+systemctl enable postgresql-9.4
+
+-- SE GUARDA
+systemctl daemon-reload
+
+-- INICIAMOS EL SERVICIO 
+yum install -y https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-3.noarch.rpm
+yum install -y postgresql94 postgresql94-server postgresql94-contrib
+/usr/pgsql-9.4/bin/postgresql94-setup initdb
+systemctl enable postgresql-9.4
+systemctl start postgresql-9.4
+
+yum install -y postgis2_94 postgis2_94-client postgis-utils
+systemctl restart postgresql-9.4
+
+
+-- INICIAMOS EL SERVICIO 
+yum install https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/pgdg-centos94-9.4-3.noarch.rpm
+
+yum install -y postgresql96 postgresql96-server postgresql96-contrib
+/usr/pgsql-9.6/bin/postgresql96-setup initdb
+systemctl enable postgresql-9.6
+systemctl start postgresql-9.6
+
+yum install -y postgis2_96 postgis2_96-client postgis2_96-utils
+yum install -y postgis25_94 postgis25_94-client postgis25_94-utils
+systemctl restart postgresql-9.6
+
+
+-- convertir jps >> tiff
+-- -s_srs '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs'
+gdalwarp -s_srs '+proj=utm +zone=17 +south +datum=WGS84 +units=m +no_defs' -t_srs EPSG:32717 -multi -srcnodata 0 -dstnodata 0 -of vrt /home/rasters/rural/IBARRA.jp2 virtual_jp2.vrt
+
+
+
+sudo find / -name postmaster.pid
+
+<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443" server=" Apache-Coyote/1.1" xpoweredBy="false"/>
+
+pg_dumpall.exe -U postgres -h localhost -p 5433 --clean --globals-only --file=D:/Documentos/RESPALDOS/backup/globals.sql
+
+# VER TODAS LOS DISCOS DUROS
+sudo lsscsi
+# ARBOL DE DISCOS
+sudo lsblk -fm
+# REDIMENSIONAR ESPACIO DE DISCOS LINUX
+https://www.binaryworld.es/redimensionar-tu-disco-duro-particion/
+https://miguelmuzquiz.wordpress.com/2016/09/23/cambiar-tamano-home-root-centos7/
+
+
+#copiar con scp con tunel por puerto local
+scp -r -P 222 root@localhost:/path/file_directory D:/
+
+growpart /dev/sda2
+
+
+# mysql
+ALTER TABLE doc_blob_reg.tb_blob DISCARD TABLESPACE ;
+ALTER TABLE doc_blob_reg.tb_blob IMPORT TABLESPACE ;
+
+"D:\xampp\mysql\bin\mysqldump.exe" –e –u root -p QwertY -h localhost -P3307 doc_blob_reg > D:\doc_data_reg.sql
+"D:\xampp\mysql\bin\mysqldump.exe" -uroot -ppassword -hlocalhost -P3307 ecommerce
+
+"D:\xampp\mysql\bin\mysql.exe" -u root -p -h localhost doc_data_reg < D:\Documentos\ARCH\doc_data_reg.sql
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
+# ejecutar en la consola de windows
+# https://www.lullabot.com/articles/importexport-large-mysql-databases
+"D:\xampp\mysql\bin\mysqldump.exe" --max-allowed-packet=5G -u root -p doc_blob_reg | "C:\Program Files (x86)\GnuWin32\bin\gzip.exe" > "D:\Documentos\RESPALDOS\LOJA\doc_blob_reg.sql.gz"
+"D:\xampp\mysql\bin\mysqldump.exe" --max-allowed-packet=5G -u root -p doc_data_reg | "C:\Program Files (x86)\GnuWin32\bin\gzip.exe" > "D:\Documentos\RESPALDOS\LOJA\doc_data_reg.sql.gz"
+"D:\xampp\mysql\bin\mysqldump.exe" --max-allowed-packet=5G -v -u root -p doc_data_reg > "D:\Documentos\RESPALDOS\LOJA\doc_data_reg.sql"
+"D:\xampp\mysql\bin\mysqldump.exe" --max-allowed-packet=5G -v -u root --databases doc_blob_reg > "D:\Documentos\RESPALDOS\LOJA\doc_blob_reg.sql"
+
+SET GLOBAL max_allowed_packet = 15G;
+
+#######################################################################################################
+#######################################################################################################
+# POSTGRESQL
+
+# EXPORTAR IMAGEN GUARDADA
+"C:\Program Files\PostgreSQL\9.4\bin\psql.exe" -h 127.0.0.1 -p 5432 -d sgmsanmiguel -U sisapp -c "\lo_export 32922 'C://leeImage.jpeg'"
+# LEER DIRECORIOS DESDE POSTGRES
+pg_ls_dir( 'c:\Windows\') ---- WIMDOWS 
+pg_ls_dir( '//Users/blah') -- LINUS 
+# funcion para agregar row con separador de comas
+select idproceso, string_agg(actividad, ', ' order by actividad) from tabla group by idproceso 
+# ALTER COLUMN TYPE CAST 
+ALTER TABLE app1.cat_predio ALTER COLUMN sector TYPE smallint USING (trim(sector)::integer);
+
+-- GET LENGHT LARGE OBJECT
+SELECT sum(length(lo.data)) FROM pg_largeobject lo WHERE lo.loid=3814449
+
+# RESPALDOS 
+pg_restore -i -h localhost -p 5432 -U sisapp -W sis98 -d censocat -v "/home/backup/CENSO3001201701.backup"
+-- -O para que el propietario sea el superusuario que esta restaurando la db
+pg_restore -O -h 172.16.8.109 -p 5432 -U sisapp -W -d bddimi -v "/home/backup.backup"
+
+"C:\Program Files\PostgreSQL\9.4\bin\psql.exe"
+
+--- restore en centos 6
+pg_restore -O -x -h '127.0.0.1' -U 'sisapp' -d sgm /home/db/sgm21022017.backup
+
+--- restore console windows
+"C:\Program Files\PostgreSQL\9.6\bin\pg_restore.exe" --host 127.0.0.1 --port 5433 --username "sisapp" --dbname "bddimi" -W --verbose "D:\Documentos\RESPALDOS-SQL\amazon-backup\bddimi_ligth.backup"
+"C:\Program Files\PostgreSQL\9.6\bin\pg_restore.exe" --host 192.168.1.76 --port 5432 --username "sisapp" --dbname "bddimi" -W --verbose "C:\Users\SUPERGOLD\Documents\Ibarra\backup\nuevaBase\bddimi_2018-04-25.22-00-01.backup"
+"C:\Program Files\PostgreSQL\9.6\bin\pg_restore.exe" --host 192.168.1.76 --port 5432 --username "sisapp" --dbname "ibarra" -W --verbose "C:\Users\SUPERGOLD\Documents\Ibarra\backup\bddimi_2017-05-08.22-00-01.backup"
+"C:\Program Files\PostgreSQL\10\bin\pg_restore.exe" --host 192.168.100.25 --port 5432 --username "postgres" --dbname "bddimi" -W --verbose "D:\Documentos\IBARRA\BACKUPS\bddimi_2018-08-28.22-00-01.backup"
+"C:\Program Files\PostgreSQL\10\bin\pg_restore.exe" --host 192.168.100.25 --port 5432 --username "sisapp" --dbname "montecristi_sgm" -W --verbose "H:\20180918_montecristi_sgm.backup"
+
+-- create role
+sudo -u postgres bash -c "psql -c \"CREATE USER sisapp WITH LOGIN SUPERUSER PASSWORD  'sisapp98';\""
+
+en ejecutar PONER PARA INICIAR LA COSOLA DE POSTGRES 
+c:\Archivos de programa\PostreSQL\8.0\bin> 
+	pg_dumpall.exe -U postgres -h localhost -p 5433 --clean --globals-only --file=D:/Documentos/RESPALDOS/backup/globals.sql
+	# RESPALDO DE TODAS LAS BASE
+	pg_dumpall -h 192.168.200.16 -p 5432 -U sisapp -f /bases.sql
+	# RESTAURAR TODAS LAS BASES
+	psql -f bases.sql postgres
+#DUMP >= 9.6
+pg_dump -h localhost -p 5432 -U sisapp -F c sgr > /home/sgr_20190620.backup
+pg_dump -C -h localhost -U sisapp rpm | psql -h localhost -p 5434 -U sisapp rpm
+"C:\Program Files\PostgreSQL\11\bin\pg_dump.exe" -C -h localhost -U sisapp rpm | "C:\Program Files\PostgreSQL\11\bin\psql.exe" -h localhost -p 5434 -U sisapp rpm
+
+# CONFIGURACION PASS
+echo "192.168.0.1:5432:mibase:miusuario:micontraseña" >> ~/.pgpass
+
+
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'sgr';
+ALTER DATABASE "sgr" RENAME TO "sgr11";
+
+SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'sgr_migracion';
+ALTER DATABASE "sgr_migracion" RENAME TO "sgr";
+
+# CONSULTAS 
+select regexp_split_to_table('hola  mundo como estas' ,E'\\s+') as x limit 2
+
+# ELIMINAR DUPLICADOS EN LA MISMA TABLA
+DELETE  FROM
+   app.reg_movimiento_cliente a
+       USING app.reg_movimiento_cliente b
+WHERE
+   a.id < b.id -- DEJA EL ID MAYOR
+   AND a.movimiento = b.movimiento
+AND a.ente_interv = b.ente_interv;
+
+
+--### DUMP TABLE 
+pg_dump -h 192.168.200.245 -p 5432 -U postgres -W --table="tb_blob_faltantes" --data-only  --column-inserts 1871-2002 > tb_blob_faltantes1.sql
+pg_dump -h 192.168.200.245 -p 5432 -U postgres -W --table="tb_blob_faltantes" --data-only  --column-inserts LojaFinal > tb_blob_faltantes2.sql
+pg_dump -h 192.168.200.245 -p 5432 -U postgres -W --table="tb_blob_faltantes" --data-only  --column-inserts db_Sand > tb_blob_faltantes3.sql
+pg_dump -h 192.168.200.245 -p 5432 -U postgres -W --table="tb_blob_faltantes" --data-only  --column-inserts db_Sand1 > tb_blob_faltantes4.sql
+
+
+--mysqldump -uroot -p tb_blob_faltantes < tb_blob_faltantes1.sql
+-- ### RESTORE INSERT SQL TO TABLE 
+mysql -uroot -p doc_faltantes tb_blob_faltantes --force < tb_blob_faltantes1.sql
+
+
+# CONFIGURACION SSH SERVER WINDOWNS
+https://winaero.com/blog/enable-openssh-server-windows-10/ 
+
+COPY DATABASE SERVER TO SERVER
+pg_dump -C -h 54.227.27.36 -U sisapp sigef | psql -h localhost -p 5432 -U sisapp sigef
+pg_dump -C -h 54.227.27.36 -U sisapp sgm | psql -h localhost -p 5432 -U sisapp sgm
+"C:\Program Files\PostgreSQL\11\bin\pg_dump.exe" -C -h localhost -U sisapp bddimi | "C:\Program Files\PostgreSQL\11\bin\psql.exe" -h 54.227.27.36 -p 5432 -U sisapp bddimi
+"C:\Program Files\PostgreSQL\11\bin\pg_dump.exe" -C -h localhost -U sisapp activiti_ibarra | "C:\Program Files\PostgreSQL\11\bin\psql.exe" -h 54.172.49.110 -p 5432 -U sisapp activiti_ibarra
+"C:\Program Files\PostgreSQL\11\bin\pg_restore.exe" --host 54.227.27.36 --port 5432 --username "sisapp" --dbname "bddimi" -W --verbose "D:\Documentos\RESPALDOS\backup\bddimi.backup"
+"C:\Program Files (x86)\pgAdmin 4\v4\runtime\pg_restore.exe" --host localhost --port 5433 --username "sisapp" --dbname "bddimi" -W --verbose "D:\Documentos\RESPALDOS-SQL\backup\bddimi-2.backup"
+
+pg_restore -O -h localhost -p 5432 -U sisapp -W -d bddimi -v "/home/centos/bddimi-2.backup"
+
+
+GRANT ALL PRIVILEGES ON \*.\* TO 'root'@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+
+Grant All Privileges ON *.* to 'root'@'%' Identified By 'sisapp98'; 
+
+UPDATE user SET password=password('sisapp98') WHERE user='root';
+UPDATE user SET authentication_string=password('sisapp98') WHERE user='root';
+
+UPDATE user SET password=sisapp98 WHERE user='root';
+UPDATE user SET authentication_string=sisapp98 WHERE user='root';
+
+bind-address = 0.0.0.0
+SET GLOBAL validate_password.length=6;
+SET GLOBAL validate_password.policy=LOW;
+
+#incrementar las conexxiones a la base de datos 
+https://stackoverflow.com/questions/30778015/how-to-increase-the-max-connections-in-postgres 
+#Aumentar rendimiento de consultas postgres
+https://backtrackacademy.com/articulo/analizando-consultas-sql
+
+Generar certificado ssl 
+openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+
+
+find /tmp -name core -type f -print | xargs /bin/rm -f
+find / -name enpos9 -type f -print | xargs /bin/rm -f
+
+
+# PROCESOS QUE MAS USAN MEMORIA 
+ps aux --width 30 --sort -rss | head
+
+#Iniciar posgres desde otro data directory
+https://www.dbrnd.com/2016/08/postgresql-change-or-move-default-data-directory-in-windows-operating-system/
+
+Ejemplo microcontrolador rfid
+https://www.javatpoint.com/embedded-system-project-rfid-based-attendance-system
+
+
+https://wiki.genexus.com/commwiki/servlet/wiki?17091,GXPRN.INI+Format
+https://wiki.genexus.com/commwiki/servlet/wiki?13692,PDF+Report+printing+-+Client-side+printing+in+web+applications
+
+http://www.networktechinc.com/pdf/enviromux-facs-manual.pdf
+http://www.ebmstore.it/ebay/download/RFID_KEYPAD.pdf
+https://cdn.shopify.com/s/files/1/0248/3676/files/RFID_Card_Access_Control_System_Manual_-_TimTec.pdf
+https://cdn.sos.sk/productdata/8e/7e/c3c1a3e7/acm207h.pdf
+https://www.digitalas.lt/wp-content/uploads/2016/08/S1-access-control-user-manual.pdf
+
+
+
