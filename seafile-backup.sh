@@ -1,3 +1,4 @@
+#!/usr/bin/expect -f 
 # Variables
 DATE=`date +%F`
 TIME=`date +%H%M`
@@ -5,6 +6,10 @@ BACKUPDIR=/backup
 SEAFDIR=/srv
 BACKUPFILE=$BACKUPDIR/seafile-$DATE-$TIME.tar
 TEMPDIR=/tmp/seafile-$DATE-$TIME
+
+
+if ! `which expect 1>/dev/null`; then exit 1; apt-get install -y expect; fi 
+
 
 # Shutdown seafile
 systemctl stop seahub
@@ -39,10 +44,12 @@ fi
 # sqlite3 $SEAFDIR/seahub.db .dump > $TEMPDIR/databases/seahub.db.bak
 # if [ -e $TEMPDIR/databases/seahub.db.bak ]; then echo ok.; else echo ERROR.; fi
 
-echo Dumping Mysql database...
-#sqlite3 $SEAFDIR/ccnet/GroupMgr/groupmgr.db .dump > $TEMPDIR/databases/groupmgr.db.bak
+echo Dumping GroupMgr database...
 #mysqldump -u anavarro -p arteaga31 --databases seafile_db ccnet_db seahub_db > dbdump.sql
-mysqldump -u anavarro -p arteaga31 --databases seafile_server ccnet_server seahub_server > dbdump.sql
+expect -c 'spawn mysqldump -u anavarro -p --databases seafile_server ccnet_server seahub_server > dbdump.sql
+
+expect "assword:"; send "sisapp98\r";
+interact exit'
 
 echo Copying seafile directory...
 rsync -az $SEAFDIR/* $TEMPDIR/data
