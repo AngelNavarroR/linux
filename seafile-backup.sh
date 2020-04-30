@@ -39,8 +39,8 @@ fi
 # sqlite3 $SEAFDIR/seahub.db .dump > $TEMPDIR/databases/seahub.db.bak
 # if [ -e $TEMPDIR/databases/seahub.db.bak ]; then echo ok.; else echo ERROR.; fi
 
-echo Dumping GroupMgr database...
-sqlite3 $SEAFDIR/ccnet/GroupMgr/groupmgr.db .dump > $TEMPDIR/databases/groupmgr.db.bak
+echo Dumping Mysql database...
+#sqlite3 $SEAFDIR/ccnet/GroupMgr/groupmgr.db .dump > $TEMPDIR/databases/groupmgr.db.bak
 #mysqldump -u anavarro -p arteaga31 --databases seafile_db ccnet_db seahub_db > dbdump.sql
 mysqldump -u anavarro -p arteaga31 --databases seafile_server ccnet_server seahub_server > dbdump.sql
 
