@@ -1,12 +1,37 @@
 # Variables
 DATE=`date +%F`
 TIME=`date +%H%M`
+USER=$1
+PASS=$2
 BACKUPDIR=/backup
-SEAFDIR=/srv
+SEAFDIR=$3
 BACKUPFILE=$BACKUPDIR/seafile-$DATE-$TIME.tar
 TEMPDIR=/tmp/seafile-$DATE-$TIME
-USER-DB=""
-PASS-DB=""
+
+if [ "$USER" == "" ]; then
+    echo "Debe agregar el usuario de mysql"
+cat <<EOF 
+	Ejemplo: ./seafile-backup.sh usuario pass
+EOF
+    exit 1
+fi
+
+
+if [ "$PASS" == "" ]; then
+    echo "Debe agregar la contasenia del usuario"
+cat <<EOF 
+	Ejemplo: ./seafile-backup.sh usuario pass
+EOF
+    exit 1
+fi
+
+if [ "$SEAFDIR" == "" ]; then
+    echo "Debe agregar la ruta de la data del seafile"
+cat <<EOF 
+	Ejemplo: ./seafile-backup.sh usuario pass /seafile/data
+EOF
+    exit 1
+fi
 
 #apt  install expect
 pkg= `dpkg-query -l 'expect'`
@@ -43,9 +68,9 @@ fi
 echo Dumping Mysql database...
 
 expect_sh=$(expect -c "
-        spawn mysqldump -u $USER-DB -p --databases seafile_server ccnet_server seahub_server -r $TEMPDIR/databases/dbdump-all.sql
+        spawn mysqldump -u anavarro -p --databases seafile_server ccnet_server seahub_server -r $TEMPDIR/databases/dbdump-all.sql
         expect \"password:\"
-        send \"$PASS-DB\r\"
+        send \"arteaga31\r\"
         expect \"#\"
 ")
 
@@ -72,5 +97,5 @@ if [ -e $BACKUPFILE.gz ]; then echo ok.; else echo ERROR.; fi
 # Cleanup
 echo Deleting temporary files...
 rm -Rf $TEMPDIR
-if [ ! -d $TEMPDIR ]; then echo "Copy Seafile directory finish"; else echo ERROR.; fi
+if [ ! -d $TEMPDIR ]; then echo "Copy Seafile directory finish"; exit 1; else echo ERROR.; fi
 exit 1
