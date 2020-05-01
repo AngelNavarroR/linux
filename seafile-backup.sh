@@ -1,4 +1,3 @@
-#!/usr/bin/expect -f 
 # Variables
 DATE=`date +%F`
 TIME=`date +%H%M`
@@ -6,9 +5,20 @@ BACKUPDIR=/backup
 SEAFDIR=/srv
 BACKUPFILE=$BACKUPDIR/seafile-$DATE-$TIME.tar
 TEMPDIR=/tmp/seafile-$DATE-$TIME
+USER-DB=""
+PASS-DB=""
 
-
-if ! `which expect 1>/dev/null`; then exit 1; apt-get install -y expect; fi 
+#apt  install expect
+pkg= `dpkg-query -l 'expect'`
+if [[ $pkg =~ "dpkg-query: no se ha encontrado" ]]; then
+    echo "Installed expect"
+    { 
+       apt install -y expect;
+    } || {
+	echo "An unexpected exception was thrown"
+	exit 1
+    }
+fi
 
 
 # Shutdown seafile
@@ -30,26 +40,19 @@ if [ ! -d $TEMPDIR ]
   mkdir -m 0600 $TEMPDIR/data
 fi
 
-# Dump data / copy data sqlite3
-# echo Dumping GroupMgr database...
-# sqlite3 $SEAFDIR/ccnet/GroupMgr/groupmgr.db .dump > $TEMPDIR/databases/groupmgr.db.bak
-# if [ -e $TEMPDIR/databases/groupmgr.db.bak ]; then echo ok.; else echo ERROR.; fi
-# echo Dumping UserMgr database...
-# sqlite3 $SEAFDIR/ccnet/PeerMgr/usermgr.db .dump > $TEMPDIR/databases/usermgr.db.bak
-# if [ -e $TEMPDIR/databases/usermgr.db.bak ]; then echo ok.; else echo ERROR.; fi
-# echo Dumping SeaFile database...
-# sqlite3 $SEAFDIR/seafile-data/seafile.db .dump > $TEMPDIR/databases/seafile.db.bak
-# if [ -e $TEMPDIR/databases/seafile.db.bak ]; then echo ok.; else echo ERROR.; fi
-# echo Dumping SeaHub database...
-# sqlite3 $SEAFDIR/seahub.db .dump > $TEMPDIR/databases/seahub.db.bak
-# if [ -e $TEMPDIR/databases/seahub.db.bak ]; then echo ok.; else echo ERROR.; fi
+echo Dumping Mysql database...
 
-echo Dumping GroupMgr database...
-#mysqldump -u anavarro -p arteaga31 --databases seafile_db ccnet_db seahub_db > dbdump.sql
-expect -c 'spawn mysqldump -u anavarro -p --databases seafile_server ccnet_server seahub_server > dbdump.sql
+expect_sh=$(expect -c "
+        spawn mysqldump -u $USER-DB -p --databases seafile_server ccnet_server seahub_server -r $TEMPDIR/databases/dbdump-all.sql
+        expect \"password:\"
+        send \"$PASS-DB\r\"
+        expect \"#\"
+")
 
-expect "assword:"; send "sisapp98\r";
-interact exit'
+echo "$expect_sh"
+echo "Backup dababase finish"
+
+#interact exit'
 
 echo Copying seafile directory...
 rsync -az $SEAFDIR/* $TEMPDIR/data
@@ -69,4 +72,5 @@ if [ -e $BACKUPFILE.gz ]; then echo ok.; else echo ERROR.; fi
 # Cleanup
 echo Deleting temporary files...
 rm -Rf $TEMPDIR
-if [ ! -d $TEMPDIR ]; then echo ok.; else echo ERROR.; fi
+if [ ! -d $TEMPDIR ]; then echo "Copy Seafile directory finish"; else echo ERROR.; fi
+exit 1
