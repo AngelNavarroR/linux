@@ -68,9 +68,9 @@ fi
 echo Dumping Mysql database...
 
 expect_sh=$(expect -c "
-        spawn mysqldump -u anavarro -p --databases seafile_server ccnet_server seahub_server -r $TEMPDIR/databases/dbdump-all.sql
+        spawn mysqldump -u $USER -p --databases seafile_server ccnet_server seahub_server -r $TEMPDIR/databases/dbdump-all.sql
         expect \"password:\"
-        send \"arteaga31\r\"
+        send \"$PASS\r\"
         expect \"#\"
 ")
 
