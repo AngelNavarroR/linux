@@ -80,7 +80,9 @@ echo "Backup dababase finish"
 #interact exit'
 
 echo Copying seafile directory...
-rsync -az $SEAFDIR/* $TEMPDIR/data
+# rsync -az $SEAFDIR/* $TEMPDIR/data # Para compresion en la red la opcion -z
+rsync -a $SEAFDIR/* $TEMPDIR/data
+
 if [ -d $TEMPDIR/data/seafile-data ]; then echo ok.; else echo ERROR.; fi
 
 # Start the server
