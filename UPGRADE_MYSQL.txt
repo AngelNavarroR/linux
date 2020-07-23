@@ -1,0 +1,99 @@
+pass: Dou9wajo
+UPGRADE MYSQL 
+
+systemctl stop seafile
+systemctl stop seahub
+
+mysql -V
+mysqldump -useafile -p --all-databases > /opt/database-dump.sql
+
+systemctl stop mariadb
+
+wget https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+sudo yum localinstall mysql57-community-release-el7-11.noarch.rpm -y
+
+nano /etc/yum.repos.d/mariadb.repo
+##############################################################
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.2/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+
+yum clean all
+yum install -y MariaDB-client MariaDB-server
+yum install -y postfix php-mysql
+systemctl enable mariadb
+systemctl start mariadb
+mysql_upgrade
+mysql -V
+
+systemctl stop mariadb
+sudo mysqld_safe --skip-grant-tables &
+mysql -u root
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Dou9wajo';
+UPDATE mysql.user SET authentication_string = PASSWORD('Dou9wajo') WHERE User = 'root' AND Host = 'localhost';
+FLUSH PRIVILEGES;
+
+nano /etc/my.cnf.d/server.cnf
+
+*******************
+[mysqld]
+
+innodb_log_file_size = 512M
+innodb_strict_mode = 0
+
+echo "sql_mode = 'NO_ENGINE_SUBSTITUTION'" >> /etc/my.cnf.d/server.cnf
+
+
+sudo yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm -y 
+sudo yum install ffmpeg ffmpeg-devel -y 
+
+sudo rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+sudo nano /etc/yum.repos.d/elasticsearch.repo
+##############################################################
+[elasticsearch-6.x]
+name=Elasticsearch repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+
+
+sudo yum install -y elasticsearch-6.5.0
+sudo systemctl enable elasticsearch.service
+sudo systemctl start elasticsearch.service
+
+-- MONO COMPLETE
+rpmkeys --import "http://pool.sks-keyservers.net/pks/lookup?op=get&search=0x3fa7e0328081bff6a14da29aa6a19b38d3d831ef"
+su -c 'curl https://download.mono-project.com/repo/centos7-stable.repo | tee /etc/yum.repos.d/mono-centos7-stable.repo'
+yum install -y mono-complete
+mono --version
+
+
+
+sudo yum install -y https://download.onlyoffice.com/repo/centos/main/noarch/onlyoffice-repo.noarch.rpm
+sudo yum install -y onlyoffice-communityserver
+
+mysqldump -useafile -p --all-databases < /opt/database-dump.sql
+
+Dou9wajo
+
+GRANT ALL PRIVILEGES ON *.* TO 'seafile'@'%' IDENTIFIED BY 'Dou9wajo' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'seafile'@'localhost' IDENTIFIED BY 'Dou9wajo';
+FLUSH PRIVILEGES;
+
+bash communityserver-configure.sh
+
+
+
+
+
+docker run -i -t -d -p 88:80 -v /app/onlyoffice/CommunityServer/logs:/var/log/onlyoffice -v /app/onlyoffice/CommunityServer/data:/var/www/onlyoffice/Data onlyoffice/documentserver
+
+
+
+
+

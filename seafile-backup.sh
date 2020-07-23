@@ -35,7 +35,7 @@ fi
 
 #apt  install expect
 pkg= `dpkg-query -l 'expect'`
-if [[ $pkg =~ "dpkg-query: no se ha encontrado" ]]; then
+if [[ $pkg =~ "dpkg-query: no se ha encontrado" || $pkg =~ "dpkg-query: no packages found" ]]; then
     echo "Installed expect"
     { 
        apt install -y expect;
@@ -80,8 +80,15 @@ echo "Backup dababase finish"
 #interact exit'
 
 echo Copying seafile directory...
-# rsync -az $SEAFDIR/* $TEMPDIR/data # Para compresion en la red la opcion -z
-rsync -a $SEAFDIR/* $TEMPDIR/data
+# USAR -z SOLO PARA CUANDO SEA ENTRE DOS EQUIPOS DE LA MISMA RED
+#rsync -az $SEAFDIR/* $TEMPDIR/data
+
+{ 
+   rsync -a $SEAFDIR/* $TEMPDIR/data
+} || {
+	echo "An unexpected exception was thrown execute rsync again recovery mode"
+	rsync -av $SEAFDIR/* $TEMPDIR/data
+}
 
 if [ -d $TEMPDIR/data/seafile-data ]; then echo ok.; else echo ERROR.; fi
 
