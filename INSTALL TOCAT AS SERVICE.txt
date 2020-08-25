@@ -43,20 +43,8 @@ Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./
 ExecStart=/opt/tomcat/bin/startup.sh
 ExecStop=/bin/kill -15 $MAINPID
 
-User=tomcat
-Group=tomcat
-
 [Install]
 WantedBy=multi-user.target
-
-
--- despues intalamos por motivos de seguridad
-
-sudo yum install -y haveged
-sudo systemctl start haveged.service
-sudo systemctl enable haveged.service
-
-
 
 
 -- SERVICION APLICACION SGM Y GEOSEERVER
